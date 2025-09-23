@@ -31,9 +31,25 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 1em 5vw;
-    background: none;
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 1002;
+}
+
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.15) 100%);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    transition: background 0.3s, backdrop-filter 0.3s;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
 }
 
 .site-title {
@@ -70,8 +86,8 @@ header {
 /* Navbar styles */
 .navbar {
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
