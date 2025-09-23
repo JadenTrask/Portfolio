@@ -1,13 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Create cursor element
+    // Create elements
     const cursor = document.createElement('div');
-    cursor.classList.add('custom-cursor');
-    document.body.appendChild(cursor);
+    const mouseLight = document.createElement('div');
+    const progressBar = document.createElement('div');
+    const scrollGear = document.createElement('div');
 
-    // Update cursor position
+    cursor.classList.add('custom-cursor');
+    mouseLight.classList.add('mouse-light');
+    progressBar.classList.add('progress-bar');
+    scrollGear.classList.add('scroll-gear');
+
+    document.body.appendChild(cursor);
+    document.body.appendChild(mouseLight);
+    document.body.appendChild(progressBar);
+    document.body.appendChild(scrollGear);
+
+    // Update cursor and light position
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
+        mouseLight.style.left = e.clientX + 'px';
+        mouseLight.style.top = e.clientY + 'px';
+    });
+
+    // Update progress bar and gear rotation
+    window.addEventListener('scroll', () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = `${scrollPercent}%`;
+        scrollGear.style.transform = `rotate(${scrollPercent * 3.6}deg)`;
+        
+        // Parallax effect for sections
+        const sections = document.querySelectorAll('.about-section');
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            if (isVisible) {
+                const scrolled = window.scrollY - rect.top + window.innerHeight / 2;
+                section.style.transform = `translateY(${scrolled * 0.1}px)`;
+                section.style.opacity = Math.min(1, 1 - Math.abs(rect.top / window.innerHeight));
+            }
+        });
     });
 
     // Add hover effect for interactive elements

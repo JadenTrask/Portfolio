@@ -17,6 +17,48 @@ html {
     cursor: none;
 }
 
+/* Progress bar */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, #0077b5, #00ff88);
+    z-index: 1003;
+    transition: width 0.1s ease;
+}
+
+/* Mouse light effect */
+.mouse-light {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    pointer-events: none;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 20%,
+        transparent 70%
+    );
+    z-index: 0;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+}
+
+/* Rotating gear */
+.scroll-gear {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>') no-repeat center;
+    opacity: 0.6;
+    z-index: 1001;
+    transform-origin: center;
+    pointer-events: none;
+}
+
 .custom-cursor {
     width: 20px;
     height: 20px;
