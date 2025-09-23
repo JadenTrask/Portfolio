@@ -346,6 +346,7 @@ header::before {
     box-shadow: 0 4px 16px rgba(0,0,0,0.22);
     filter: brightness(1.08);
     text-decoration: none;
+    cursor: none;
 }
 
 @keyframes blink-cursor {

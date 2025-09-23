@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Add hover effect for interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .skill-item, img');
+    const interactiveElements = document.querySelectorAll('a, button, .skill-item, img, .social-btn');
     interactiveElements.forEach(el => {
+        el.style.cursor = 'none'; // Hide the original cursor
         el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
