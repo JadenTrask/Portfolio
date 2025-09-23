@@ -1,0 +1,235 @@
+@font-face {
+    font-family: 'Inter-Regular';
+    src: url("fonts/Inter_18pt-Regular.ttf") format("opentype");
+}
+@font-face {
+    font-family: 'Inter-Light';
+    src: url("fonts/Inter_18pt-Light.ttf") format("opentype");
+}
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url("fonts/Inter_18pt-Bold.ttf") format("opentype");
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: black;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter-Bold";
+    color: white;
+    line-height: 1.6;
+    background-color: black;
+    padding: 20px;
+}
+
+/* Header and Navbar */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em 5vw;
+    background: none;
+    position: relative;
+    z-index: 1002;
+}
+
+.site-title {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: 30px;
+    color: white;
+    font-family: "Inter-Light";
+    letter-spacing: 1px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    z-index: 1001;
+}
+.menu-toggle span {
+    display: block;
+    height: 4px;
+    width: 28px;
+    background: white;
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s;
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    position: relative;
+    font-family: "Inter-Light";
+    margin-right: 15px;
+    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.navbar a:last-child {
+    margin-right: 0;
+}
+
+/* Animated underline */
+.navbar a::after {
+    content: "";
+    position: absolute;
+    left: 20%;
+    bottom: 8px;
+    width: 60%;
+    height: 2px;
+    background: white;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s;
+}
+.navbar a:hover::after {
+    transform: scaleX(1);
+}
+.navbar a:hover {
+    transform: scale(1.06);
+    background-color: rgba(255,255,255,0.08);
+    color: #fff;
+}
+
+/* Responsive: Mobile menu */
+@media (max-width: 700px) {
+    .menu-toggle {
+        display: flex;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 220px;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 60px;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+        z-index: 1000;
+    }
+    .navbar.open {
+        transform: translateX(0);
+    }
+    .navbar a {
+        float: none;
+        margin: 20px 0 0 20px;
+        font-size: 1.2em;
+        padding: 12px 0;
+    }
+    header {
+        padding: 10px 20px;
+    }
+}
+
+/* Nameplate styles */
+.nameplate {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: larger;
+    font-family: 'SF-Regular', Arial, sans-serif;
+    color: white;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.nameplate h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.2em;
+    font-family: 'SF-Regular', Arial, sans-serif;
+}
+.nameplate h3 {
+    font-size: 1.3em;
+    font-family: 'SF-Light', Arial, sans-serif;
+    margin-bottom: 1em;
+    font-weight: normal;
+}
+.nameplate p {
+    font-size: 1.1em;
+    font-family: "Inter-Light";
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+#typed {
+    border-right: 2px solid #fff;
+    display: inline-block;
+    padding-right: 1px;
+    animation: blink-cursor 0.8s steps(1) infinite;
+}
+
+/* Social buttons under nameplate */
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+.social-btn {
+    display: inline-block;
+    padding: 0.7em 1.6em;
+    border-radius: 30px;
+    font-family: "Inter-Bold", Arial, sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(90deg, #3a3a3a 0%, #232526 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+.social-btn.linkedin {
+    background: linear-gradient(90deg, #0077b5 0%, #005983 100%);
+}
+.social-btn.github {
+    background: linear-gradient(90deg, #333 0%, #24292e 100%);
+}
+.social-btn.email {
+    background: linear-gradient(90deg, #d44638 0%, #a8322e 100%);
+}
+.social-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    filter: brightness(1.08);
+    text-decoration: none;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { border-color: #fff; }
+    50% { border-color: transparent; }
+}
