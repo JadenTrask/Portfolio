@@ -477,8 +477,8 @@ header::before {
 .social-btn.github {
     background: linear-gradient(90deg, #333 0%, #24292e 100%);
 }
-.social-btn.email {
-    background: linear-gradient(90deg, #d44638 0%, #a8322e 100%);
+.social-btn.resume {
+    background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
 }
 .social-btn:hover {
     transform: translateY(-2px) scale(1.05);
