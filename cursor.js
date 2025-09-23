@@ -15,13 +15,44 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(progressBar);
     document.body.appendChild(scrollGear);
 
-    // Update cursor and light position
+    // Simple mouse tracking
+    let mouseX = 0, mouseY = 0;
+    let lightX = 0, lightY = 0;
+    
     document.addEventListener('mousemove', (e) => {
+        // Cursor follows mouse exactly
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
-        mouseLight.style.left = e.clientX + 'px';
-        mouseLight.style.top = e.clientY + 'px';
+        
+        // Save mouse position
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
+
+    // Smooth light following
+    function updateLight() {
+        // Simple easing
+        lightX += (mouseX - lightX) * 0.1;
+        lightY += (mouseY - lightY) * 0.1;
+        
+        // Update light position with smooth transition
+        mouseLight.style.transform = 'translate(-50%, -50%)';
+        mouseLight.style.left = `${lightX}px`;
+        mouseLight.style.top = `${lightY}px`;
+        
+        // Update position with smooth transition
+        mouseLight.style.left = lightX + 'px';
+        mouseLight.style.top = lightY + 'px';
+        
+        // Momentum decay
+        velocityX *= 0.92;
+        velocityY *= 0.92;
+        
+        requestAnimationFrame(updateLight);
+    }
+    updateLight();
+    
+
 
     // Update progress bar and gear rotation
     window.addEventListener('scroll', () => {
