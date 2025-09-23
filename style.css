@@ -84,8 +84,21 @@ html {
 .nameplate h1 {
     position: relative;
     z-index: 2;
-    mix-blend-mode: overlay;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    background: linear-gradient(
+        60deg,
+        #3eb8ff,
+        #ffb76b,
+        #ff6bb8,
+        #6bffb7,
+        #b76bff,
+        #3eb8ff
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: slide 15s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 /* Rotating gear */
@@ -97,9 +110,10 @@ html {
     height: 50px;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>') no-repeat center;
     opacity: 0.6;
-    z-index: 1001;
+    z-index: 1004;
     transform-origin: center;
     pointer-events: none;
+    margin-top: 40px;
 }
 
 .custom-cursor {
@@ -110,13 +124,19 @@ html {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.15s ease;
+    transition: transform 0.15s ease, background-color 0.15s ease;
     transform: translate(-50%, -50%);
 }
 
 .custom-cursor.hover {
     transform: translate(-50%, -50%) scale(1.5);
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-cursor.click {
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-width: 1px;
     border-color: rgba(255, 255, 255, 0.6);
 }
 
@@ -127,12 +147,13 @@ body {
     line-height: 1.6;
     background-color: black;
     min-height: 100vh;
+    position: relative;
 }
 
 main {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 80px 20px 20px;
+    padding: 60px 20px 80px;
 }
 
 /* Footer */
@@ -318,12 +339,17 @@ header::before {
 .about-section {
     text-align: center;
     max-width: 650px;
-    margin: 100px auto 60px auto;
+    margin: 60px auto;
     padding: 32px 24px;
-    background: rgba(30,30,30,0.85);
+    position: relative;
     border-radius: 18px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
     color: #fff;
+    overflow: hidden;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 .image-container {
@@ -401,6 +427,7 @@ header::before {
     font-size: 2.5em;
     margin-bottom: 0.2em;
     font-family: 'Inter-Bold', Arial, sans-serif;
+    opacity: 0.95;
 }
 .nameplate h3 {
     font-size: 1.3em;
