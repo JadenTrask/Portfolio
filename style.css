@@ -158,14 +158,16 @@ html {
     width: 20px;
     height: 20px;
     border: 2px solid rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
+    border-radius: 20px;
     position: fixed;
+    left: 0;
+    top: 0;
     pointer-events: none;
     z-index: 9999;
-    transform: translate(-50%, -50%);
     transform-origin: center;
     transition: background-color 0.15s ease;
     will-change: transform;
+    mix-blend-mode: difference;
 }
 
 .custom-cursor.hover {

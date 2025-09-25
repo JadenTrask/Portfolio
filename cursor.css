@@ -1,0 +1,25 @@
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 10px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform-origin: center;
+    will-change: transform;
+    opacity: 0.8;
+}
+
+.custom-cursor.hover {
+    opacity: 1;
+    height: 30px;
+}
+
+.custom-cursor.click {
+    height: 15px;
+    width: 15px;
+    border-radius: 7.5px;
+}

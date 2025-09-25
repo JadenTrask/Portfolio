@@ -22,44 +22,50 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastMouseX = 0;
     let lastMouseY = 0;
     let lastTime = performance.now();
-    const springStrength = 0.2;
-    const drag = 0.85;
-    const maxStretch = 2;
-    const rotationFactor = 15;
+    
+    // Constants for cursor physics
+    const springStrength = 0.3;
+    const drag = 0.75;
+    const maxStretch = 8;
+    const minWidth = 0.2;
 
-    // Cursor tracking with physics
     function updateCursor(timestamp) {
-        const deltaTime = (timestamp - lastTime) / 16; // Normalize to 60fps
+        const deltaTime = Math.min((timestamp - lastTime) / 16, 2);
         lastTime = timestamp;
 
-        // Update position with spring physics
+        // Initialize position if needed
+        if (currentX === 0 && currentY === 0) {
+            currentX = targetX;
+            currentY = targetY;
+        }
+
+        // Calculate velocities from mouse movement
         const dx = targetX - currentX;
         const dy = targetY - currentY;
         
-        // Apply spring force
+        // Apply spring physics
         velocityX += dx * springStrength;
         velocityY += dy * springStrength;
-        
-        // Apply drag
         velocityX *= drag;
         velocityY *= drag;
         
-        // Update current position
-        currentX += velocityX * deltaTime;
-        currentY += velocityY * deltaTime;
+        // Update position
+        currentX += velocityX;
+        currentY += velocityY;
 
-        // Calculate stretching based on velocity
+        // Calculate speed and direction
         const speed = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
-        const stretch = Math.min(1 + (speed * 0.01), maxStretch);
-        
-        // Calculate rotation based on movement direction
-        const angle = Math.atan2(velocityY, velocityX) * (180 / Math.PI);
-        
+        const angle = Math.atan2(velocityY, velocityX);
+
+        // Calculate stretch based on speed
+        const stretch = Math.min(1 + (speed * 0.03), maxStretch);
+        const squeeze = Math.max(minWidth, 1 / Math.sqrt(stretch));
+
         // Apply transforms
-        cursor.style.transform = `translate(${currentX}px, ${currentY}px) 
-                                rotate(${angle * 0.5}deg)
-                                scale(${1 + (speed * 0.001)})
-                                scaleX(${stretch})`;
+        cursor.style.transform = `translate(${currentX}px, ${currentY}px)
+                                translate(-50%, -50%)
+                                rotate(${angle}rad)
+                                scale(${stretch}, ${squeeze})`;
 
         requestAnimationFrame(updateCursor);
     }
@@ -67,34 +73,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', (e) => {
         targetX = e.clientX;
         targetY = e.clientY;
-
-        // Calculate instantaneous velocity
-        const now = performance.now();
-        const dt = now - lastTime;
-        if (dt > 0) {
-            const dx = e.clientX - lastMouseX;
-            const dy = e.clientY - lastMouseY;
-            velocityX = dx / dt * 16; // Scale to roughly match 60fps
-            velocityY = dy / dt * 16;
-        }
+        
+        // Update velocities
+        velocityX = (e.clientX - lastMouseX) * 2;
+        velocityY = (e.clientY - lastMouseY) * 2;
 
         lastMouseX = e.clientX;
         lastMouseY = e.clientY;
     });
 
-    // Start animation loop
+    // Start animation
     requestAnimationFrame(updateCursor);
 
-    // Add click animation to cursor
-    document.addEventListener('mousedown', () => {
-        cursor.classList.add('click');
-    });
-    
-    document.addEventListener('mouseup', () => {
-        cursor.classList.remove('click');
-    });
+    // Click animation
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
 
-    // Update progress bar and gear rotation
+    // Scroll elements
     let lastScrollY = window.scrollY;
     let gearRotation = 0;
     let ticking = false;
@@ -118,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // Add hover effect for interactive elements
+    // Interactive elements
     const interactiveElements = document.querySelectorAll('a, button, .skill-item, img, .social-btn');
     interactiveElements.forEach(el => {
         el.style.cursor = 'none';
@@ -126,12 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
 
-    // Hide cursor when it leaves the window
-    document.addEventListener('mouseleave', () => {
-        cursor.style.display = 'none';
-    });
-
-    document.addEventListener('mouseenter', () => {
-        cursor.style.display = 'block';
-    });
+    // Window events
+    document.addEventListener('mouseleave', () => cursor.style.display = 'none');
+    document.addEventListener('mouseenter', () => cursor.style.display = 'block');
 });
