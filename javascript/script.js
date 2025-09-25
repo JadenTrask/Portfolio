@@ -39,6 +39,11 @@ window.addEventListener("DOMContentLoaded", function() {
             typedSpan.textContent += correctText.charAt(j);
             j++;
             setTimeout(typeCorrection, randomDelay());
+        } else {
+            // Hide cursor after 3 seconds when typing is complete
+            setTimeout(() => {
+                typedSpan.style.borderRight = 'none';
+            }, 3000);
         }
     }
 
