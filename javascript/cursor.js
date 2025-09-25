@@ -2,8 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if the device supports touch (mobile device)
     if (!('ontouchstart' in window)) {
         const cursor = document.createElement('div');
+        const progressBar = document.createElement('div');
+        
         cursor.classList.add('custom-cursor');
+        progressBar.classList.add('progress-bar');
+        
         document.body.appendChild(cursor);
+        document.body.appendChild(progressBar);
 
         let mouseX = 0;
         let mouseY = 0;
@@ -15,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let dotVelY = 0;
         let speed = 0.15; // Main cursor follow speed
         let springStrength = 0.1; // How strongly the dot is pulled to the center
-        let friction = 0.8; // Friction to slow down the dot
+        let dotFriction = 0.8; // Friction to slow down the dot
 
     // Update mouse position
         document.addEventListener('mousemove', (e) => {
@@ -65,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dotVelY += springY;
 
             // Apply friction
-            dotVelX *= friction;
-            dotVelY *= friction;
+            dotVelX *= dotFriction;
+            dotVelY *= dotFriction;
 
             // Update dot position
             dotX += dotVelX;
@@ -96,6 +101,31 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
+
+        // Progress bar update
+        let ticking = false;
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercent))}%`;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercent))}%`;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
 
         // Window events
         document.addEventListener('mouseleave', () => cursor.style.display = 'none');
