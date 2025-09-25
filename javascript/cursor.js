@@ -32,10 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update progress bar and gear rotation
     let lastScrollY = window.scrollY;
     let gearRotation = 0;
+    let ticking = false;
 
-    window.addEventListener('scroll', () => {
+    function updateScrollElements() {
         const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = `${scrollPercent}%`;
+        progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercent))}%`;
         
         // Calculate gear rotation based on scroll direction and amount
         const scrollDiff = window.scrollY - lastScrollY;
@@ -43,7 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollGear.style.transform = `rotate(${gearRotation}deg)`;
         lastScrollY = window.scrollY;
         
-    });
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollElements);
+            ticking = true;
+        }
+    }, { passive: true });
 
     // Add hover effect for interactive elements
     const interactiveElements = document.querySelectorAll('a, button, .skill-item, img, .social-btn');

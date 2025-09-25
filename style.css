@@ -86,7 +86,8 @@ html {
     height: 4px;
     background: linear-gradient(90deg, #0077b5, #00ff88);
     z-index: 1003;
-    transition: width 0.1s ease;
+    will-change: width;
+    transform: translateZ(0); /* Force hardware acceleration */
 }
 
 
